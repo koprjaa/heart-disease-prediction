@@ -11,8 +11,6 @@ This project was developed as part of the 4IZ210 course.
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
-- [Dependencies](#dependencies)
-- [Examples](#examples)
 - [Contributors](#contributors)
 - [License](#license)
 
@@ -61,31 +59,6 @@ python heart_disease_prediction.py
 - Visualization of decision trees and feature importances
 - Local explanation for individual predictions
 
-## Dependencies
-- pandas
-- matplotlib
-- numpy
-- scikit-learn
-
-Install these dependencies using:
-```sh
-pip install -r requirements.txt
-```
-
-## Examples
-Here are some example visualizations and outputs from the project:
-
-1. **Histogram of Age Groups by Heart Disease Presence:**
-   ![Age Groups by Heart Disease](images/age_histogram.png)
-
-2. **Correlation Matrix:**
-   ![Correlation Matrix](images/correlation_matrix.png)
-
-3. **Confusion Matrix for Decision Tree:**
-   ![Decision Tree Confusion Matrix](images/dt_confusion_matrix.png)
-
-4. **Feature Importance from Random Forest:**
-   ![Random Forest Feature Importance](images/rf_feature_importance.png)
 
 ## Contributors
 - Jan Alexandr Kopřiva ([koprjaa](https://github.com/koprjaa))
