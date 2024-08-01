@@ -29,7 +29,7 @@ This project was developed as part of the 4IZ210 course.
    ```
 
 ## Usage
-The provided script `heart_disease_prediction.py` performs the following tasks:
+The provided script `main.py` performs the following tasks:
 
 1. **Import Libraries:** Imports necessary libraries and modules such as pandas, matplotlib, numpy, and various scikit-learn components.
 2. **Load Dataset:** Loads the heart disease dataset from a CSV file.
@@ -47,7 +47,7 @@ The provided script `heart_disease_prediction.py` performs the following tasks:
 
 To run the script, simply execute it in your Python environment:
 ```sh
-python heart_disease_prediction.py
+python main.py
 ```
 
 ## Features
