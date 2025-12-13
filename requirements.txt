@@ -1,3 +1,13 @@
-matplotlib==3.9.1
+# Data analysis
 pandas==2.2.2
+numpy>=1.24.0
+
+# Machine Learning
 scikit-learn==1.5.1
+
+# Visualization
+matplotlib==3.9.1
+
+# Jupyter
+jupyter>=1.0.0
+notebook>=7.0.0
