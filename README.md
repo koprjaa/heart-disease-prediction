@@ -1,3 +1,8 @@
+![Python](https://img.shields.io/badge/python-3.8+-blue?style=flat-square)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-1.5.1-blue?style=flat-square)
+![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
+![Status](https://img.shields.io/badge/status-complete-blue?style=flat-square)
+
 # Heart Disease Prediction
 
 Binary classification of heart disease using Decision Tree and Random Forest classifiers with asymmetric cost evaluation.
