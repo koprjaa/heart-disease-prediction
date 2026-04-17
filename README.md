@@ -1,6 +1,6 @@
 # 4IZ210 — Heart Disease Prediction
 
-**Semester project for Machine Learning I at VŠE. Binary classification on 918 clinical records with asymmetric-cost evaluation — because missing a diagnosis costs more than a false alarm.**
+**Course project for 4IZ210 Machine Learning I, Prague University of Economics and Business: Jan Alexandr Kopřiva, David Hložek, Jakub Hermann, Ondřej Čech, Milan Tvrdík.**
 
 ![python](https://img.shields.io/badge/python-3.8+-3776AB?style=flat-square&logo=python&logoColor=white)
 ![license](https://img.shields.io/badge/license-MIT-A31F34?style=flat-square)
@@ -9,6 +9,8 @@
 ![sklearn](https://img.shields.io/badge/scikit--learn-1.5-F7931E?style=flat-square&logo=scikit-learn&logoColor=white)
 ![pandas](https://img.shields.io/badge/pandas-2.2-150458?style=flat-square&logo=pandas&logoColor=white)
 ![matplotlib](https://img.shields.io/badge/matplotlib-3.9-11557C?style=flat-square)
+
+Binary classification on 918 clinical records with asymmetric-cost evaluation — because missing a diagnosis costs more than a false alarm.
 
 Decision Tree and Random Forest classifiers trained on 11 clinical features, evaluated against both plain accuracy and a **cost-weighted matrix** `[[TN=0, FP=1], [FN=10, TP=0]]` — because in clinical screening, a missed diagnosis (false negative) leads to untreated disease while a false alarm leads only to additional testing. The 10:1 ratio is illustrative; real deployments would ask a domain expert.
 
@@ -89,11 +91,6 @@ print(f"RF with low chol: {rf_model.predict_proba(instance_mod)[0,1]:.2%}")
 - **Cholesterol = 0 rows** aren't handled — they're biologically impossible and probably missing values.
 - **No model persistence** — re-run the notebook to re-train.
 - **Default 0.5 probability threshold** — cost-sensitive threshold tuning would improve the cost score measurably.
-
-## Authors
-
-Course project for **4IZ210 Machine Learning I**, Prague University of Economics and Business:
-Jan Alexandr Kopřiva, David Hložek, Jakub Hermann, Ondřej Čech, Milan Tvrdík.
 
 ## License
 
