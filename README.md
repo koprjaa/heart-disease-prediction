@@ -10,11 +10,20 @@
 ![pandas](https://img.shields.io/badge/pandas-2.2-150458?style=flat-square&logo=pandas&logoColor=white)
 ![matplotlib](https://img.shields.io/badge/matplotlib-3.9-11557C?style=flat-square)
 
-Binary classification on 918 clinical records with asymmetric-cost evaluation — because missing a diagnosis costs more than a false alarm.
+Two-part term project on 918 clinical records:
 
-Decision Tree and Random Forest classifiers trained on 11 clinical features, evaluated against both plain accuracy and a **cost-weighted matrix** `[[TN=0, FP=1], [FN=10, TP=0]]` — because in clinical screening, a missed diagnosis (false negative) leads to untreated disease while a false alarm leads only to additional testing. The 10:1 ratio is illustrative; real deployments would ask a domain expert.
+| Part | Approach | File |
+|---|---|---|
+| **1: Classification** | Decision Tree + Random Forest, asymmetric cost matrix | `heart_disease_prediction.ipynb` |
+| **2: Clustering** | K-Means + Ward hierarchical, elbow + silhouette, PCA viz | `heart_disease_clustering.py` |
 
-## Pipeline
+Both parts share the same dataset and asymmetric-cost philosophy `[[TN=0, FP=1], [FN=10, TP=0]]` — missing a diagnosis costs more than a false alarm.
+
+## Part 1 — Classification
+
+Decision Tree and Random Forest classifiers trained on 11 clinical features, evaluated against both plain accuracy and the cost-weighted matrix.
+
+### Pipeline
 
 ```
 heart.csv (918 rows × 12 cols)
@@ -41,7 +50,7 @@ heart.csv (918 rows × 12 cols)
         • Counterfactual analysis ("what if cholesterol was X?")
 ```
 
-## Run it
+### Run it
 
 ```bash
 uv venv
@@ -50,6 +59,56 @@ jupyter notebook heart_disease_prediction.ipynb
 ```
 
 Execute cells top to bottom. Full pass takes ~2-3 minutes on a laptop (GridSearchCV is the bottleneck). 31 code cells, all self-contained.
+
+## Part 2 — Clustering
+
+Unsupervised analysis of the same 918 records — drop the `HeartDisease` label, ask whether natural clusters in feature space coincide with disease/no-disease split.
+
+### Pipeline
+
+```
+heart.csv (918 rows × 12 cols)
+  │
+  ├── Preprocessing (ColumnTransformer)
+  │     • MinMaxScaler on 6 numeric features
+  │     • OneHotEncoder on 5 categorical features
+  │     • HeartDisease removed (kept only for Rand-score evaluation)
+  │     • No train/test split (unsupervised)
+  │
+  ├── K-Means
+  │     • k=2 baseline (matches binary target)
+  │     • KElbowVisualizer over k=2..15
+  │       — best by inertia: k=6
+  │       — best by silhouette: k=2
+  │     • PCA-reduced 2D scatter visualisation
+  │
+  ├── Hierarchical (agglomerative)
+  │     • Ward linkage
+  │     • Dendrogram
+  │     • fcluster cuts at multiple thresholds
+  │
+  └── Evaluation
+        • Silhouette score (intrinsic)
+        • Rand score vs. ground-truth HeartDisease (extrinsic)
+        • Per-cluster aggregations (mean numeric, mode categorical) for interpretation
+```
+
+### Customization (assignment-specific)
+
+| Parameter | Value |
+|---|---|
+| Target attribute (held out for eval) | `HeartDisease` |
+| Instance of interest | row 69 (`heart_data.iloc[68]`) |
+| Attribute of interest | `Cholesterol` |
+
+### Run it
+
+```bash
+uv pip install pandas numpy scikit-learn scipy matplotlib yellowbrick
+python heart_disease_clustering.py
+```
+
+Split into `# %%` cells — best run interactively (Jupyter, VS Code Python, Spyder).
 
 ## Dataset
 
