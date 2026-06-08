@@ -7,3 +7,5 @@ venv/
 *.log
 .idea/
 .ipynb_checkpoints/
+
+.claude/
