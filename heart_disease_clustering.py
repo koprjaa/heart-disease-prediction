@@ -12,23 +12,16 @@ import numpy as np
 import random
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import OneHotEncoder
 import matplotlib.pyplot as plt
 from sklearn.pipeline import Pipeline
 from scipy.cluster.hierarchy import dendrogram, linkage
 from sklearn import set_config
-from sklearn.pipeline import make_pipeline
 from sklearn.decomposition import PCA
 from sklearn.compose import ColumnTransformer
-from sklearn.model_selection import GridSearchCV
 from sklearn import metrics
-from sklearn.preprocessing import StandardScaler
-from sklearn.compose import make_column_transformer
 from sklearn.cluster import AgglomerativeClustering
 from yellowbrick.cluster import KElbowVisualizer
-from sklearn.metrics import rand_score
-from scipy.cluster.hierarchy import fcluster
 
 # %%
 """
