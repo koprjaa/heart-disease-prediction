@@ -9,3 +9,8 @@ venv/
 .ipynb_checkpoints/
 
 .claude/
+
+# Tooling caches
+.ruff_cache/
+uv.lock
+.venv/

@@ -7,28 +7,19 @@
 
 # %%
 # import of all libraries
-import pandas as pd
-import numpy as np
 import random
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
-from sklearn.preprocessing import OneHotEncoder
+
 import matplotlib.pyplot as plt
-from sklearn.pipeline import Pipeline
+import numpy as np
+import pandas as pd
 from scipy.cluster.hierarchy import dendrogram, linkage
-from sklearn import set_config
-from sklearn.pipeline import make_pipeline
-from sklearn.decomposition import PCA
+from sklearn import metrics, set_config
+from sklearn.cluster import AgglomerativeClustering, KMeans
 from sklearn.compose import ColumnTransformer
-from sklearn.model_selection import GridSearchCV
-from sklearn import metrics
-from sklearn.preprocessing import StandardScaler
-from sklearn.compose import make_column_transformer
-from sklearn.cluster import AgglomerativeClustering
+from sklearn.decomposition import PCA
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 from yellowbrick.cluster import KElbowVisualizer
-from sklearn.metrics import rand_score
-from scipy.cluster.hierarchy import fcluster
 
 # %%
 """
@@ -36,7 +27,7 @@ from scipy.cluster.hierarchy import fcluster
 """
 
 # %%
-"""
+r"""
 - 4IZ110 Wednesday 12:45\-13:30
 - Team A
 - David Hložek, Jan Alexandr Kopřiva, Jakub Hermann, Ondrej Čech, Milan Tvrdík
@@ -50,9 +41,9 @@ from scipy.cluster.hierarchy import fcluster
 """
 
 # %%
-"""
+r"""
 1. This term paper deals with the detection of cardiovascular diseases \(heart diseases\) using machine learning in the Python language. This issue has considerable potential for improving health care and reducing costs in the health sector. Timely and accurate diagnosis of heart diseases with the help of allows adequate treatment to be started earlier, which can save lives and reduce the risk of serious complications. At the same time, early identification of patients at risk offers scope for effective preventive measures. Our group believes that the application of machine learning methods in the field of cardiovascular medicine could bring benefits to improve the quality of life of patients and save human lives.
-2. Link to the dataset: [https://www.kaggle.com/datasets/fedesoriano/heart\-failure\-prediction](https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction) 
+2. Link to the dataset: [https://www.kaggle.com/datasets/fedesoriano/heart\-failure\-prediction](https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction)
 
 
 """
@@ -63,7 +54,7 @@ from scipy.cluster.hierarchy import fcluster
 """
 
 # %%
-"""
+r"""
 1. Target Attribute: HeartDisease
 2. Instance of interest: 69th row \(see below\)
 3. Attribute of interest: Cholesterol
@@ -77,7 +68,7 @@ heart_data = pd.read_csv('heart.csv')
 
 # Show instance nr. 69
 chosen_instance = heart_data.iloc[68]
-print(chosen_instance, "\n") 
+print(chosen_instance, "\n")
 
 # %%
 # Cost matrix
@@ -99,7 +90,7 @@ print(cost_matrix)
 
 # %%
 """
-## Preprocessing for unsupervised machine learning 
+## Preprocessing for unsupervised machine learning
 """
 
 # %%
@@ -234,7 +225,7 @@ plot_clusters(idk, k_best_model)
 
 # %%
 """
-* Try to use the dendrogram to identify outliers. If an instance joins a cluster higher on the dendrogram, it generally means it is less similar to the other instances. 
+* Try to use the dendrogram to identify outliers. If an instance joins a cluster higher on the dendrogram, it generally means it is less similar to the other instances.
 """
 
 # %%
@@ -316,7 +307,7 @@ print("Hierarchical clustering result (Rand score): ", metrics.rand_score(hierar
 # %%
 # selected instance number 69 with heart failure
 chosen_instance = heart_data.iloc[68]
-print(chosen_instance, "\n") 
+print(chosen_instance, "\n")
 
 # instance 69 after applying preprocessing
 chosen_instance_preprocessed = preprocessor.transform(train).iloc[68:69]
@@ -339,7 +330,7 @@ print("Cluster according to k_best: ", k_best_prediction[0], "\n")
 """
 
 # %%
-"""
+r"""
 ### Clustering 1 \- KMeans
 
 
@@ -359,9 +350,8 @@ def agg_func(x):
     if heart_data.dtypes[x.name] == "object":
         # For nominal values, return the most frequent value
         return x.value_counts().index[0]
-    else:
-        # For numerical values, return the mean
-        return x.mean()
+    # For numerical values, return the mean
+    return x.mean()
 
 # %%
 # Concatenate original data with predicted cluster labels from KMeans model

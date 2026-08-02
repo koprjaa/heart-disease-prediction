@@ -6,6 +6,7 @@ Heart disease prediction on 918 clinical records. Course project for 4IZ210 Mach
 ![license](https://img.shields.io/badge/license-MIT-A31F34?style=flat-square)
 ![status](https://img.shields.io/badge/status-complete-22863A?style=flat-square)
 ![jupyter](https://img.shields.io/badge/Jupyter-notebook-F37626?style=flat-square&logo=jupyter&logoColor=white)
+[![ci](https://github.com/koprjaa/4IZ210/actions/workflows/ci.yml/badge.svg)](https://github.com/koprjaa/4IZ210/actions/workflows/ci.yml)
 
 Authors: Jan Alexandr Kopřiva, David Hložek, Jakub Hermann, Ondřej Čech, Milan Tvrdík.
 
@@ -128,6 +129,7 @@ The assignment fixed three parameters: `HeartDisease` as the held out target, ro
 - Rows with `Cholesterol = 0` stay in the data. That value is not biologically possible and probably means a missing value.
 - The notebook saves no model. Every run trains again.
 - The probability threshold stays at the default 0.5. Tuning it against the cost matrix would improve the cost score.
+- The notebook is coursework written by five people and is left as it was submitted. CI lints the exported script only.
 
 ## License
 

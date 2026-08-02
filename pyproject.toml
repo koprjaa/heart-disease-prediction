@@ -1,0 +1,47 @@
+[project]
+name = "heart-disease-4iz210"
+version = "1.0.0"
+description = "Heart disease prediction and clustering on 918 clinical records. Course project for 4IZ210."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [{ name = "Jan Alexandr Kopřiva", email = "jan.alexandr.kopriva@gmail.com" }]
+keywords = ["machine-learning", "classification", "clustering", "scikit-learn"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "pandas>=2.2",
+    "numpy>=1.26",
+    "scikit-learn>=1.5",
+    "scipy>=1.13",
+    "matplotlib>=3.9",
+    "yellowbrick>=1.5",
+]
+
+[project.optional-dependencies]
+dev = ["ruff==0.16.1"]
+
+[project.urls]
+Homepage = "https://github.com/koprjaa/4IZ210"
+Repository = "https://github.com/koprjaa/4IZ210"
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+# The notebook is coursework written by five people. Only the exported script
+# is linted, so nobody's cells get rewritten after the fact.
+extend-exclude = ["*.ipynb"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "UP", "N", "SIM", "C4", "RET", "PTH", "TRY", "PERF", "RUF"]
+# E501  line length is handled by the formatter
+# TRY003 one exception subclass per message is ceremony
+ignore = ["E501", "TRY003"]
+
+[tool.uv]
+package = false
