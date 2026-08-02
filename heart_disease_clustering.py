@@ -17,9 +17,9 @@ from sklearn import metrics, set_config
 from sklearn.cluster import AgglomerativeClustering, KMeans
 from sklearn.compose import ColumnTransformer
 from sklearn.decomposition import PCA
+from sklearn.metrics import silhouette_score
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
-from yellowbrick.cluster import KElbowVisualizer
 
 # %%
 """
@@ -172,14 +172,39 @@ k2_model = KMeans(n_clusters=2, random_state=42, n_init=10)
 k2_model.fit(train_preprocessed)
 
 # %%
-# Initialize KMeans model for tuning
-kmeans_tune = KMeans(random_state=42, n_init=10)
+def plot_k_scores(data, k_range=range(2, 15)):
+    """Distortion and silhouette across a range of k, side by side.
 
-# Inertia method to find best k value (best-k = 6)
-KElbowVisualizer(kmeans_tune, k=(2, 15), metric="distortion").fit(train_preprocessed).show()
+    This replaces yellowbrick's KElbowVisualizer, which raised
+    YellowbrickTypeError against current scikit-learn: it decides whether an
+    estimator is a clusterer by reading _estimator_type, which scikit-learn no
+    longer sets. yellowbrick has had no release since 2022, so the fix is to
+    stop depending on it rather than to pin scikit-learn back.
+    """
+    distortion, silhouette = [], []
+    for k in k_range:
+        model = KMeans(n_clusters=k, random_state=42, n_init=10).fit(data)
+        distortion.append(model.inertia_)
+        silhouette.append(silhouette_score(data, model.labels_))
 
-# Silhouette method to find best k value (best-k = 2)
-KElbowVisualizer(kmeans_tune, k=(2, 15), metric="silhouette").fit(train_preprocessed).show()
+    _, axes = plt.subplots(1, 2, figsize=(12, 4))
+    for axis, scores, name in (
+        (axes[0], distortion, "Distortion (inertia)"),
+        (axes[1], silhouette, "Silhouette score"),
+    ):
+        axis.plot(list(k_range), scores, marker="o")
+        axis.set_xlabel("k")
+        axis.set_title(name)
+    plt.tight_layout()
+    plt.show()
+
+    return {
+        "best_k_distortion": list(k_range)[int(np.argmin(np.gradient(distortion)))],
+        "best_k_silhouette": list(k_range)[int(np.argmax(silhouette))],
+    }
+
+
+print(plot_k_scores(train_preprocessed))
 
 
 # %%
@@ -347,7 +372,10 @@ def agg_func(x):
     Returns:
     - Aggregated value (most frequent value for object data types, mean for numerical data types)
     """
-    if heart_data.dtypes[x.name] == "object":
+    # Ask whether the column is numeric rather than comparing its dtype to the
+    # string "object". Pandas 3 gives text columns a str dtype, so that
+    # comparison stopped matching and the mean was taken over strings.
+    if not pd.api.types.is_numeric_dtype(heart_data[x.name]):
         # For nominal values, return the most frequent value
         return x.value_counts().index[0]
     # For numerical values, return the mean
